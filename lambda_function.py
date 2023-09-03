@@ -66,6 +66,8 @@ def main():
                                     asunto_contenido = td_asunto_element.get_text(strip=True) if td_asunto_element else ""
                                     descripcion_td = soup_adicional.find("td", class_="BG_TIT_PAG")
                                     descripcion_contenido = descripcion_td.get_text(strip=True) if descripcion_td else ""
+                                    extrapar = "&Sch_Titulo=&Sch_Fecha_Entrada_Desde=&Sch_Fecha_Entrada_Hasta=&Sch_Fecha_Lectura_Desde=&Sch_Fecha_Lectura_Hasta=&Sch_Cod_Usuario=&Sch_Seleccion_Usuarios=&Sch_Destinatario=&Sch_Urgente=&Sch_Remitente=&Sch_RemDes=&cur=&Sch_CodTemporada=&marcado_ok=1"
+                                    response_adicional = session.post(f"{TARGET_URL}{extrapar}&marcarCorreos=1&marca_leido=0&mc={match.group(2)}")
                                     send_telegram_message(f"{asunto_contenido}\n\n{descripcion_contenido}")
                                     download_links = soup_adicional.find_all('a',attrs={"title":'Descargar fichero'})
                                     if download_links:
